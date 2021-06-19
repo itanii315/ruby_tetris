@@ -20,7 +20,7 @@ class Tetris < Gosu::Window
   end
 
   def draw
-    draw_rect(0, 0, SCREEN_W, SCREEN_H, Gosu::Color::WHITE)
+    Gosu.draw_rect(0, 0, SCREEN_W, SCREEN_H, Gosu::Color::WHITE)
     @field.draw
   end
 end
