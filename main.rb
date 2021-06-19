@@ -1,7 +1,7 @@
 require 'gosu'
 require './field.rb'
 
-class Tutorial < Gosu::Window
+class Tetris < Gosu::Window
   SCREEN_W = 640
   SCREEN_H = 480
   BLOCK_SIZE = 20
@@ -24,4 +24,4 @@ class Tutorial < Gosu::Window
   end
 end
 
-Tutorial.new.show
+Tetris.new.show

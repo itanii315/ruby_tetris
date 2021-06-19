@@ -11,7 +11,7 @@ class Field
     @h = @y_length * @block_size
     @lines = create_field
   end
-  
+
   def draw
     draw_rect_on_field(0, 0, @w, @h, Gosu::Color::BLACK)
     draw_blocks
