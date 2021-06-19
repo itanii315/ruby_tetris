@@ -43,14 +43,23 @@ class Field
     @field[y][x] = block
   end
 
+  def remove_line
+    @y_length.times do |y|
+      @field[y] = nil if @field[y].all? {|block| block.type != 0}
+    end
+    @field.compact!
+    empty_lines = Array.new(@y_length - @field.size) { create_line }
+    @field = empty_lines.concat(@field)
+  end
+
   private
 
   def create_field
-    Array.new(@y_length) do
-      Array.new(@x_length) do
-        Block.new
-      end
-    end
+    Array.new(@y_length) { create_line }
+  end
+
+  def create_line
+    Array.new(@x_length) { Block.new }
   end
 
   def create_minos

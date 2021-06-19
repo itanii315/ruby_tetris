@@ -53,6 +53,8 @@ class Mino
     move(1, 0) if Gosu::button_down?(Gosu::KB_RIGHT)
     move(0, 1) if Gosu::button_down?(Gosu::KB_DOWN)
     drop if Gosu::button_down?(Gosu::KB_UP)
+    spin(false) if Gosu::button_down?(Gosu::KB_Z)
+    spin(true) if Gosu::button_down?(Gosu::KB_X)
   end
 
   private
@@ -76,7 +78,7 @@ class Mino
     put_mino
   end
 
-  def spin(reverse=false)
+  def spin(reverse)
     spin!(reverse)
     spin!(!reverse) if collision_detection
   end
@@ -101,6 +103,7 @@ class Mino
         @field.set(@x + x, @y + y, block) if block.type != 0
       end
     end
+    @field.remove_line
     @field.renew_active_mino!
   end
 
