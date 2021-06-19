@@ -1,4 +1,3 @@
-require './block.rb'
 require './mino.rb'
 
 class Field
@@ -44,22 +43,19 @@ class Field
   end
 
   def remove_line
-    @y_length.times do |y|
-      @field[y] = nil if @field[y].all? {|block| block.type != 0}
-    end
-    @field.compact!
-    empty_lines = Array.new(@y_length - @field.size) { create_line }
+    @field.select! {|line| line.any?(&:zero?)}
+    empty_lines = Array.new(@y_length - @field.size) { create_empty_line }
     @field = empty_lines.concat(@field)
   end
 
   private
 
   def create_field
-    Array.new(@y_length) { create_line }
+    Array.new(@y_length) { create_empty_line }
   end
 
-  def create_line
-    Array.new(@x_length) { Block.new }
+  def create_empty_line
+    Array.new(@x_length, 0)
   end
 
   def create_minos
@@ -69,7 +65,7 @@ class Field
   def draw_blocks
     @field.each.with_index do |line, y|
       line.each.with_index do |block, x|
-        draw_block(x, y, block.color)
+        draw_block(x, y, color(block))
       end
     end
   end
@@ -77,7 +73,7 @@ class Field
   def draw_active_mino
     @active_mino.blocks.each.with_index do |line, y|
       line.each.with_index do |block, x|
-        draw_block(@active_mino.x + x, @active_mino.y + y, block.color)
+        draw_block(@active_mino.x + x, @active_mino.y + y, color(block))
       end
     end
   end
@@ -103,5 +99,18 @@ class Field
 
   def draw_line_on_field(x1, y1, x2, y2, c)
     Gosu.draw_line(@x + x1, @y + y1, c, @x + x2, @y + y2, c)
+  end
+
+  def color(type)
+    case type
+    when 0 then Gosu::Color::NONE
+    when 1 then Gosu::Color::RED
+    when 2 then Gosu::Color.argb(0xff_FF8000) # ORANGE
+    when 3 then Gosu::Color::YELLOW
+    when 4 then Gosu::Color::GREEN
+    when 5 then Gosu::Color::CYAN
+    when 6 then Gosu::Color::BLUE
+    when 7 then Gosu::Color::FUCHSIA # PURPLE
+    end
   end
 end

@@ -1,5 +1,3 @@
-require "./block.rb"
-
 class Mino
   I = [
     [0, 0, 0, 0],
@@ -100,7 +98,7 @@ class Mino
   def put_mino
     @blocks.each.with_index do |line, y|
       line.each.with_index do |block, x|
-        @field.set(@x + x, @y + y, block) if block.type != 0
+        @field.set(@x + x, @y + y, block) if block != 0
       end
     end
     @field.remove_line
@@ -110,7 +108,7 @@ class Mino
   def convert_to_block(mino, num)
     mino.map do |line|
       line.map do |i|
-        Block.new(i * num)
+        i.zero? ? 0 : num
       end
     end
   end
@@ -118,7 +116,7 @@ class Mino
   def collision_detection
     @blocks.each.with_index do |line, y|
       line.each.with_index do |block, x|
-        return true if @field.get(@x + x, @y + y)&.type != 0 && block.type != 0
+        return true if @field.get(@x + x, @y + y) != 0 && block != 0
       end
     end
     false
