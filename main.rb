@@ -16,6 +16,7 @@ class Tetris < Gosu::Window
   end
 
   def update
+    @field.update
   end
 
   def draw

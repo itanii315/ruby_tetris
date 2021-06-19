@@ -1,4 +1,5 @@
 require './block.rb'
+require './mino.rb'
 
 class Field
   def initialize(x, y, x_length, y_length, block_size)
@@ -9,13 +10,37 @@ class Field
     @block_size = block_size
     @w = @x_length * @block_size
     @h = @y_length * @block_size
-    @lines = create_field
+    @field = create_field
+    @minos = create_minos
+    renew_active_mino!
+  end
+
+  def update
+    @active_mino.update
   end
 
   def draw
     draw_rect_on_field(0, 0, @w, @h, Gosu::Color::BLACK)
     draw_blocks
+    draw_active_mino
     draw_grid
+  end
+
+  def renew_active_mino!
+    @active_mino = @minos.shift
+    @minos.concat(create_minos) if @minos.size < 7
+  end
+
+  def get(x, y)
+    return if y < 0 || @y_length <= y
+    return if x < 0 || @x_length <= x
+    @field[y][x]
+  end
+
+  def set(x, y, block)
+    return if y < 0 || @y_length <= y
+    return if x < 0 || @x_length <= x
+    @field[y][x] = block
   end
 
   private
@@ -28,10 +53,22 @@ class Field
     end
   end
 
+  def create_minos
+    (1..7).map {|i| Mino.new(i, self)}
+  end
+
   def draw_blocks
-    @lines.each.with_index do |line, y|
+    @field.each.with_index do |line, y|
       line.each.with_index do |block, x|
         draw_block(x, y, block.color)
+      end
+    end
+  end
+
+  def draw_active_mino
+    @active_mino.blocks.each.with_index do |line, y|
+      line.each.with_index do |block, x|
+        draw_block(@active_mino.x + x, @active_mino.y + y, block.color)
       end
     end
   end
