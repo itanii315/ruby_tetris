@@ -1,9 +1,9 @@
 require './mino.rb'
+require './canvas.rb'
 
-class Field
+class Field < Canvas
   def initialize(x, y, x_length, y_length, block_size)
-    @x = x
-    @y = y
+    super x, y
     @x_length = x_length
     @y_length = y_length
     @block_size = block_size
