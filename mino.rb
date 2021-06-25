@@ -1,3 +1,5 @@
+require "./keyboard"
+
 class Mino
   I = [
     [0, 0, 0, 0],
@@ -43,16 +45,16 @@ class Mino
     @blocks = convert_to_block(mino, num)
     @field = field
     @x = 3
-    @y = -1
+    @y = 0
   end
 
   def update
-    move(-1, 0) if Gosu::button_down?(Gosu::KB_LEFT)
-    move(1, 0) if Gosu::button_down?(Gosu::KB_RIGHT)
-    move(0, 1) if Gosu::button_down?(Gosu::KB_DOWN)
-    drop if Gosu::button_down?(Gosu::KB_UP)
-    spin(false) if Gosu::button_down?(Gosu::KB_Z)
-    spin(true) if Gosu::button_down?(Gosu::KB_X)
+    move(-1, 0) if Keyboard.key_down?(Gosu::KB_LEFT)
+    move(1, 0) if Keyboard.key_down?(Gosu::KB_RIGHT)
+    move(0, 1) if Keyboard.key_down?(Gosu::KB_DOWN)
+    drop if Keyboard.key_down?(Gosu::KB_UP, only_once=true)
+    spin(false) if Keyboard.key_down?(Gosu::KB_Z)
+    spin(true) if Keyboard.key_down?(Gosu::KB_X)
   end
 
   private
