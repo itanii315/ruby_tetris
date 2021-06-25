@@ -40,10 +40,10 @@ class Mino
 
   attr_accessor :blocks, :x, :y
 
-  def initialize(num, field)
+  def initialize(num, player)
     mino = MINOS[num]
     @blocks = convert_to_block(mino, num)
-    @field = field
+    @player = player
     @x = 3
     @y = 0
   end
@@ -61,9 +61,9 @@ class Mino
 
   def move(x, y)
     move!(x, y)
-    if collision_detection
+    if @player.collision_detection
       move!(-x, -y)
-      put_mino if y > 0
+      @player.put_mino if y > 0
     end
   end
 
@@ -73,14 +73,14 @@ class Mino
   end
 
   def drop
-    move!(0, 1) while !collision_detection
+    move!(0, 1) while !@player.collision_detection
     move!(0, -1)
-    put_mino
+    @player.put_mino
   end
 
   def spin(reverse)
     spin!(reverse)
-    spin!(!reverse) if collision_detection
+    spin!(!reverse) if @player.collision_detection
   end
 
   def spin!(reverse)
@@ -97,30 +97,11 @@ class Mino
     @blocks = new_blocks
   end
 
-  def put_mino
-    @blocks.each.with_index do |line, y|
-      line.each.with_index do |block, x|
-        @field.set(@x + x, @y + y, block) if block != 0
-      end
-    end
-    @field.remove_line
-    @field.renew_active_mino!
-  end
-
   def convert_to_block(mino, num)
     mino.map do |line|
       line.map do |i|
         i.zero? ? 0 : num
       end
     end
-  end
-
-  def collision_detection
-    @blocks.each.with_index do |line, y|
-      line.each.with_index do |block, x|
-        return true if @field.get(@x + x, @y + y) != 0 && block != 0
-      end
-    end
-    false
   end
 end

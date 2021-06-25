@@ -1,14 +1,24 @@
 class Canvas
-  def initialize(x, y)
+  def initialize(x, y, w, h)
     @x = x
     @y = y
+    @w = w
+    @h = h
   end
 
-  def draw_rect_on_field(x, y, w, h, c)
+  def draw_block(x_num, y_num, c)
+    draw_rect_on_canvas(x_num * @block_size, y_num * @block_size, @block_size, @block_size, c)
+    draw_line_on_canvas(x_num * @block_size, y_num * @block_size, (x_num + 1) * @block_size, y_num * @block_size, Gosu::Color::GRAY)
+    draw_line_on_canvas(x_num * @block_size, (y_num + 1) * @block_size, (x_num + 1) * @block_size, (y_num + 1) * @block_size, Gosu::Color::GRAY)
+    draw_line_on_canvas(x_num * @block_size, y_num * @block_size, x_num * @block_size, (y_num + 1) * @block_size, Gosu::Color::GRAY)
+    draw_line_on_canvas((x_num + 1) * @block_size, y_num * @block_size, (x_num + 1) * @block_size, (y_num + 1) * @block_size, Gosu::Color::GRAY)
+  end
+
+  def draw_rect_on_canvas(x, y, w, h, c)
     Gosu.draw_rect(@x + x, @y + y, w, h, c)
   end
 
-  def draw_line_on_field(x1, y1, x2, y2, c)
+  def draw_line_on_canvas(x1, y1, x2, y2, c)
     Gosu.draw_line(@x + x1, @y + y1, c, @x + x2, @y + y2, c)
   end
 end

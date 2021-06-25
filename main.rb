@@ -1,27 +1,24 @@
 require 'gosu'
-require './field.rb'
+require './player.rb'
 
 class Tetris < Gosu::Window
   SCREEN_W = 640
   SCREEN_H = 480
-  BLOCK_SIZE = 20
-  X_LENGTH = 10
-  Y_LENGTH = 20
 
   def initialize
     super SCREEN_W, SCREEN_H
     self.caption = "Tetris"
 
-    @field = Field.new(40, 40, X_LENGTH, Y_LENGTH, BLOCK_SIZE)
+    @player = Player.new(40, 40)
   end
 
   def update
-    @field.update
+    @player.update
   end
 
   def draw
     Gosu.draw_rect(0, 0, SCREEN_W, SCREEN_H, Gosu::Color::WHITE)
-    @field.draw
+    @player.draw
   end
 end
 
