@@ -86,11 +86,11 @@ class Mino
   def spin!(reverse)
     new_blocks = @blocks.map(&:dup)
     @blocks.each.with_index do |line, y|
-      line.each.with_index do |block, x|
+      line.each.with_index do |block_num, x|
         if reverse
-          new_blocks[-x-1][y] = block
+          new_blocks[-x-1][y] = block_num
         else
-          new_blocks[x][-y-1] = block
+          new_blocks[x][-y-1] = block_num
         end
       end
     end

@@ -1,5 +1,6 @@
 require './mino.rb'
 require './canvas.rb'
+require './color.rb'
 
 class Field < Canvas
   def initialize(x, y, x_length, y_length, block_size)
@@ -64,8 +65,8 @@ class Field < Canvas
 
   def draw_blocks
     @field.each.with_index do |line, y|
-      line.each.with_index do |block, x|
-        draw_block(x, y, color(block))
+      line.each.with_index do |block_num, x|
+        draw_block(x, y, Color.from(block_num))
       end
     end
   end
@@ -73,7 +74,7 @@ class Field < Canvas
   def draw_active_mino
     @active_mino.blocks.each.with_index do |line, y|
       line.each.with_index do |block, x|
-        draw_block(@active_mino.x + x, @active_mino.y + y, color(block))
+        draw_block(@active_mino.x + x, @active_mino.y + y, Color.from(block))
       end
     end
   end
@@ -99,18 +100,5 @@ class Field < Canvas
 
   def draw_line_on_field(x1, y1, x2, y2, c)
     Gosu.draw_line(@x + x1, @y + y1, c, @x + x2, @y + y2, c)
-  end
-
-  def color(type)
-    case type
-    when 0 then Gosu::Color::NONE
-    when 1 then Gosu::Color::RED
-    when 2 then Gosu::Color.argb(0xff_FF8000) # ORANGE
-    when 3 then Gosu::Color::YELLOW
-    when 4 then Gosu::Color::GREEN
-    when 5 then Gosu::Color::CYAN
-    when 6 then Gosu::Color::BLUE
-    when 7 then Gosu::Color::FUCHSIA # PURPLE
-    end
   end
 end
