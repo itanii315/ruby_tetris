@@ -53,8 +53,8 @@ class Mino
     move(1, 0) if Keyboard.key_down?(Gosu::KB_RIGHT)
     move(0, 1) if Keyboard.key_down?(Gosu::KB_DOWN)
     drop if Keyboard.key_down?(Gosu::KB_UP, only_once=true)
-    spin(false) if Keyboard.key_down?(Gosu::KB_Z)
-    spin(true) if Keyboard.key_down?(Gosu::KB_X)
+    spin(false) if Keyboard.key_down?(Gosu::KB_Z, only_once=true)
+    spin(true) if Keyboard.key_down?(Gosu::KB_X, only_once=true)
   end
 
   private

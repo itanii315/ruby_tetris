@@ -1,8 +1,10 @@
 require './field.rb'
+require './next_mino_canvas.rb'
 class Player
   def initialize(x, y)
     @minos = create_minos
     @field = Field.new(x, y)
+    @next_mino_canvas = NextMinoCanvas.new(440, 40, 15 * 5 + 5, 15 * 19, @minos)
     renew_active_mino!
   end
 
@@ -17,6 +19,7 @@ class Player
         @field.draw_block(@active_mino.x + x, @active_mino.y + y, Color.from(block))
       end
     end
+    @next_mino_canvas.draw
   end
 
   def put_mino

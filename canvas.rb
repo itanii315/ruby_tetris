@@ -6,8 +6,9 @@ class Canvas
     @h = h
   end
 
-  def draw_block(x_num, y_num, c)
+  def draw_block(x_num, y_num, c, hide_none_frame=false)
     draw_rect_on_canvas(x_num * @block_size, y_num * @block_size, @block_size, @block_size, c)
+    return if hide_none_frame && c == Gosu::Color::NONE
     draw_line_on_canvas(x_num * @block_size, y_num * @block_size, (x_num + 1) * @block_size, y_num * @block_size, Gosu::Color::GRAY)
     draw_line_on_canvas(x_num * @block_size, (y_num + 1) * @block_size, (x_num + 1) * @block_size, (y_num + 1) * @block_size, Gosu::Color::GRAY)
     draw_line_on_canvas(x_num * @block_size, y_num * @block_size, x_num * @block_size, (y_num + 1) * @block_size, Gosu::Color::GRAY)

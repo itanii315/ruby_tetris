@@ -9,7 +9,7 @@ class Tetris < Gosu::Window
     super SCREEN_W, SCREEN_H
     self.caption = "Tetris"
 
-    @player = Player.new(40, 40)
+    @player = Player.new(220, 40)
   end
 
   def update
