@@ -39,6 +39,14 @@ class Field < Canvas
   def remove_line
     @field.select! {|line| line.any?(&:zero?)}
     empty_lines = Array.new(@y_length - @field.size) { create_empty_line }
+    case empty_lines.size
+    when 1
+      Gosu::Sample.new("sound/line1.mp3").play
+    when 2
+      Gosu::Sample.new("sound/line2.mp3").play
+    when 3
+      Gosu::Sample.new("sound/line3.mp3").play
+    end
     @field = empty_lines.concat(@field)
   end
 

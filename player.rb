@@ -1,6 +1,7 @@
 require './field.rb'
 require './next_mino_canvas.rb'
 class Player
+  attr_accessor :game_over_flag
   def initialize(x, y)
     @minos = create_minos
     @field = Field.new(x, y)
@@ -28,6 +29,7 @@ class Player
         @field.set(@active_mino.x + x, @active_mino.y + y, block) if block != 0
       end
     end
+    Gosu::Sample.new("sound/drop.mp3").play
     @field.remove_line
     renew_active_mino!
   end

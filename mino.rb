@@ -64,6 +64,8 @@ class Mino
     if @player.collision_detection
       move!(-x, -y)
       @player.put_mino if y > 0
+    elsif x != 0
+      Gosu::Sample.new("sound/move.mp3").play
     end
   end
 
@@ -80,7 +82,11 @@ class Mino
 
   def spin(reverse)
     spin!(reverse)
-    spin!(!reverse) if @player.collision_detection
+    if @player.collision_detection
+      spin!(!reverse) 
+    else
+      Gosu::Sample.new("sound/spin.mp3").play
+    end
   end
 
   def spin!(reverse)
