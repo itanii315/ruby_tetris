@@ -9,8 +9,8 @@ class Tetris < Gosu::Window
     super SCREEN_W, SCREEN_H
     self.caption = "Tetris"
 
-    @player = Player.new(220, 40)
-    @back_ground_image = Gosu::Image.new("image/back_ground.jpeg", tileable: true)
+    @player = Player.new
+    @back_ground_image = Gosu::Image.new("image/back_ground.jpeg")
     @bgm = Gosu::Song.new("sound/bgm.mp3")
     @bgm.volume = 0.6
     @bgm.play(looping=true)

@@ -1,4 +1,5 @@
 class Canvas
+  attr_accessor :x, :y, :w, :h
   def initialize(x, y, w, h)
     @x = x
     @y = y
