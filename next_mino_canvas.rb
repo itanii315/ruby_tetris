@@ -1,8 +1,7 @@
 require './canvas.rb'
 class NextMinoCanvas < Canvas
-  def initialize(x, y, w, h, minos)
-    super x, y, w, h
-    @block_size = 15
+  def initialize(x, y, w, h, block_size, minos)
+    super x, y, w, h, block_size
     @minos = minos
   end
 

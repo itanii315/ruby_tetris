@@ -41,20 +41,32 @@ class Mino
   attr_accessor :blocks, :x, :y
 
   def initialize(num, player)
-    mino = MINOS[num]
-    @blocks = convert_to_block(mino, num)
+    @color_num = num
+    init_blocks
     @player = player
+    reset
+  end
+
+  def reset
     @x = 3
     @y = 0
+    init_blocks
   end
 
   def update
     move(-1, 0) if Keyboard.key_down?(Gosu::KB_LEFT)
     move(1, 0) if Keyboard.key_down?(Gosu::KB_RIGHT)
     move(0, 1) if Keyboard.key_down?(Gosu::KB_DOWN)
-    drop if Keyboard.key_down?(Gosu::KB_UP, only_once=true)
+    drop(true) if Keyboard.key_down?(Gosu::KB_UP, only_once=true)
     spin(false) if Keyboard.key_down?(Gosu::KB_Z, only_once=true)
     spin(true) if Keyboard.key_down?(Gosu::KB_X, only_once=true)
+    @player.hold if Keyboard.key_down?(Gosu::KB_C, only_once=true)
+  end
+
+  def drop(is_put)
+    move!(0, 1) while !@player.collision_detection
+    move!(0, -1)
+    @player.put_mino if is_put
   end
 
   private
@@ -72,12 +84,6 @@ class Mino
   def move!(x, y)
     @x += x
     @y += y
-  end
-
-  def drop
-    move!(0, 1) while !@player.collision_detection
-    move!(0, -1)
-    @player.put_mino
   end
 
   def spin(reverse)
@@ -103,10 +109,10 @@ class Mino
     @blocks = new_blocks
   end
 
-  def convert_to_block(mino, num)
-    mino.map do |line|
+  def init_blocks
+    @blocks = MINOS[@color_num].map do |line|
       line.map do |i|
-        i.zero? ? 0 : num
+        i.zero? ? 0 : @color_num
       end
     end
   end

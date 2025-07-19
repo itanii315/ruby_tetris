@@ -1,10 +1,11 @@
 class Canvas
   attr_accessor :x, :y, :w, :h
-  def initialize(x, y, w, h)
+  def initialize(x, y, w, h, block_size)
     @x = x
     @y = y
     @w = w
     @h = h
+    @block_size = block_size
   end
 
   def draw_block(x_num, y_num, c, hide_none_frame=false)

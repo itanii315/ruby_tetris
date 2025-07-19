@@ -8,10 +8,9 @@ class Field < Canvas
   Y_LENGTH = 20
 
   def initialize(x, y, x_length=X_LENGTH, y_length=Y_LENGTH, block_size=BLOCK_SIZE)
-    super x, y, x_length * block_size, y_length * block_size
+    super x, y, x_length * block_size, y_length * block_size, block_size
     @x_length = x_length
     @y_length = y_length
-    @block_size = block_size
     @field = create_field
   end
 
@@ -37,7 +36,7 @@ class Field < Canvas
   end
 
   def remove_line
-    @field.select! {|line| line.any?(&:zero?)}
+    @field.reject! {|line| line.all? {|block| block != 0}}
     empty_lines = Array.new(@y_length - @field.size) { create_empty_line }
     case empty_lines.size
     when 1
@@ -46,6 +45,8 @@ class Field < Canvas
       Gosu::Sample.new("sound/line2.mp3").play
     when 3
       Gosu::Sample.new("sound/line3.mp3").play
+    when 4
+      Gosu::Sample.new("sound/line4.mp3").play
     end
     @field = empty_lines.concat(@field)
   end

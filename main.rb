@@ -13,7 +13,7 @@ class Tetris < Gosu::Window
     @back_ground_image = Gosu::Image.new("image/back_ground.jpeg")
     @bgm = Gosu::Song.new("sound/bgm.mp3")
     @bgm.volume = 0.6
-    @bgm.play(looping=true)
+    @bgm.play(true)
   end
 
   def update
